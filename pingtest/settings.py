@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "main",
+    "storages",
 ]
 
 MIDDLEWARE = [
@@ -116,13 +117,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+# STATIC_URL = "/static/"
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# MEDIA_URL = "/media/"
+# MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AWS_ACCESS_KEY_ID = "DO00NFCAEZ3VBXZDGKGH"
+AWS_SECRET_ACCESS_KEY = "Zk2kp6utfY++/k0I5QuMJGPGsCjhDzS6lUNcII5TrfA"
+AWS_STORAGE_BUCKET_NAME = "spaceforcheflist"
+AWS_DEFAULT_ACL = "public-read"
+AWS_S3_ENDPOINT_URL = "https://fra1.digitaloceanspaces.com"
+AWS_S3_OBJECT_PARAMETERS = {"CacheControl": "max-age=86400"}
+AWS_STATIC_LOCATION = "static"
+AWS_LOCATION = "static"
+
+STATIC_URL = f"https://{AWS_S3_ENDPOINT_URL}/{AWS_LOCATION}/"
+STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+
+AWS_MEDIA_LOCATION = "media"
+PUBLIC_MEDIA_LOCATION = "media"
+MEDIA_URL = f"https://{AWS_S3_ENDPOINT_URL}/{PUBLIC_MEDIA_LOCATION}/"
+DEFAULT_FILE_STORAGE = "pingtest.storage_backends.MediaStorage"
